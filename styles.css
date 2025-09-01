@@ -1815,91 +1815,509 @@ h4 {
     }
 }
 
-/* Responsive Design */
+/* Mobile Responsive Design */
 @media (max-width: 768px) {
+    /* Navigation */
     .nav-container {
-        padding: var(--spacing-md);
+        padding: var(--spacing-sm) var(--spacing-md);
+        height: 70px;
+    }
+    
+    .nav-logo {
+        font-size: 1.5rem;
     }
     
     .nav-menu {
         position: fixed;
-        top: 80px;
+        top: 70px;
         left: -100%;
         width: 100%;
-        height: calc(100vh - 80px);
-        background: var(--bg-primary);
+        height: calc(100vh - 70px);
+        background: rgba(10, 10, 10, 0.95);
         flex-direction: column;
         padding: var(--spacing-xl);
         transition: var(--transition-smooth);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
+        z-index: 1000;
     }
     
     .nav-menu.active {
         left: 0;
     }
     
+    .nav-link {
+        font-size: 1.2rem;
+        padding: var(--spacing-md);
+        margin: var(--spacing-xs) 0;
+        border-radius: var(--radius-md);
+        background: rgba(255, 255, 255, 0.05);
+    }
+    
     .hamburger {
         display: flex;
+        padding: var(--spacing-sm);
     }
     
+    /* Main Content */
     .main-content {
-        padding: var(--spacing-md);
+        padding: var(--spacing-md) var(--spacing-sm);
+        margin-top: 70px;
     }
     
+    /* Headers */
     .dashboard-header h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
+        line-height: 1.2;
+        margin-bottom: var(--spacing-md);
     }
     
+    .dashboard-header p {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+    
+    .section-header h2 {
+        font-size: 1.8rem;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .section-header p {
+        font-size: 0.95rem;
+    }
+    
+    /* Layouts */
     .registration-container,
     .attendance-container {
         grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
+        gap: var(--spacing-md);
     }
     
     .dashboard-stats {
         grid-template-columns: 1fr;
+        gap: var(--spacing-md);
     }
     
+    /* Cards */
+    .stat-card {
+        padding: var(--spacing-lg);
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .stat-card h3 {
+        font-size: 2rem;
+    }
+    
+    .stat-card p {
+        font-size: 0.9rem;
+    }
+    
+    /* Buttons */
     .quick-actions {
         flex-direction: column;
         align-items: center;
+        gap: var(--spacing-md);
     }
     
     .action-btn {
         width: 100%;
-        max-width: 300px;
+        max-width: 320px;
         justify-content: center;
+        padding: var(--spacing-md) var(--spacing-lg);
+        font-size: 1rem;
     }
     
+    .btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.9rem;
+        min-height: 44px; /* Touch-friendly */
+    }
+    
+    /* Camera */
+    .camera-container {
+        height: 300px;
+        border-radius: var(--radius-lg);
+    }
+    
+    .face-frame {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .face-overlay p {
+        font-size: 0.9rem;
+        margin-top: var(--spacing-sm);
+    }
+    
+    /* Forms */
+    .form-group {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: var(--spacing-sm);
+        font-size: 1rem;
+        min-height: 44px; /* Touch-friendly */
+    }
+    
+    .form-group label {
+        font-size: 0.9rem;
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    /* Grids */
     .students-grid {
         grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 480px) {
-    .nav-container {
-        flex-direction: column;
         gap: var(--spacing-md);
     }
     
-    .section-header h2 {
-        font-size: 2rem;
+    .student-card {
+        padding: var(--spacing-md);
+        flex-direction: column;
+        text-align: center;
     }
     
-    .dashboard-header h1 {
-        font-size: 2rem;
+    .student-avatar {
+        margin-bottom: var(--spacing-sm);
     }
     
-    .stat-card {
+    .student-avatar img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    /* Attendance */
+    .attendance-item {
+        padding: var(--spacing-md);
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-sm);
+    }
+    
+    .attendance-avatar {
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .attendance-avatar img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    /* Recognition Status */
+    .recognition-status {
+        bottom: 10px;
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.8rem;
+    }
+    
+    /* Modals */
+    .modal {
+        padding: var(--spacing-lg);
+        margin: var(--spacing-md);
+        max-height: calc(100vh - 2 * var(--spacing-md));
+        overflow-y: auto;
+    }
+    
+    .modal-content {
         padding: var(--spacing-lg);
     }
     
+    /* Notifications */
+    .notification {
+        right: var(--spacing-sm);
+        left: var(--spacing-sm);
+        max-width: none;
+        padding: var(--spacing-md);
+    }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+    /* Navigation */
+    .nav-container {
+        height: 60px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .nav-logo {
+        font-size: 1.3rem;
+    }
+    
+    .nav-menu {
+        top: 60px;
+        height: calc(100vh - 60px);
+        padding: var(--spacing-lg);
+    }
+    
+    .nav-link {
+        font-size: 1.1rem;
+        padding: var(--spacing-sm);
+    }
+    
+    /* Main Content */
+    .main-content {
+        padding: var(--spacing-sm);
+        margin-top: 60px;
+    }
+    
+    /* Headers */
+    .dashboard-header h1 {
+        font-size: 1.8rem;
+        line-height: 1.1;
+    }
+    
+    .dashboard-header p {
+        font-size: 0.9rem;
+    }
+    
+    .section-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .section-header p {
+        font-size: 0.85rem;
+    }
+    
+    /* Cards */
+    .stat-card {
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .stat-card h3 {
+        font-size: 1.8rem;
+    }
+    
+    .stat-card p {
+        font-size: 0.8rem;
+    }
+    
+    .stat-card i {
+        font-size: 2rem;
+    }
+    
+    /* Buttons */
+    .action-btn {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 0.9rem;
+        max-width: 280px;
+    }
+    
+    .btn {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.85rem;
+        min-height: 40px;
+    }
+    
+    /* Camera */
+    .camera-container {
+        height: 250px;
+    }
+    
+    .face-frame {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .face-overlay p {
+        font-size: 0.8rem;
+    }
+    
+    /* Forms */
+    .form-group input,
+    .form-group textarea {
+        padding: var(--spacing-xs);
+        font-size: 0.9rem;
+        min-height: 40px;
+    }
+    
+    .form-group label {
+        font-size: 0.8rem;
+    }
+    
+    /* Sections */
     .camera-section,
     .form-section,
     .attendance-list,
     .students-container {
-        padding: var(--spacing-lg);
+        padding: var(--spacing-md);
+    }
+    
+    /* Student Cards */
+    .student-card {
+        padding: var(--spacing-sm);
+    }
+    
+    .student-avatar img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .student-info h4 {
+        font-size: 1rem;
+    }
+    
+    .student-info p {
+        font-size: 0.8rem;
+    }
+    
+    /* Attendance Items */
+    .attendance-item {
+        padding: var(--spacing-sm);
+    }
+    
+    .attendance-avatar img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .attendance-details h5 {
+        font-size: 0.9rem;
+    }
+    
+    .attendance-details p {
+        font-size: 0.75rem;
+    }
+    
+    /* Recognition Status */
+    .recognition-status {
+        bottom: 5px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.7rem;
+    }
+    
+    /* Modals */
+    .modal {
+        padding: var(--spacing-md);
+        margin: var(--spacing-sm);
+    }
+    
+    .modal-content {
+        padding: var(--spacing-md);
+    }
+    
+    /* Notifications */
+    .notification {
+        right: var(--spacing-xs);
+        left: var(--spacing-xs);
+        padding: var(--spacing-sm);
+        font-size: 0.85rem;
+    }
+}
+
+/* Android & Touch Optimizations */
+@media (max-width: 768px) {
+    /* Touch-friendly interactions */
+    * {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    
+    input, textarea, button {
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+    }
+    
+    /* Smooth scrolling for mobile */
+    html {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+    
+    /* Prevent zoom on input focus */
+    input, textarea, select {
+        font-size: 16px !important;
+    }
+    
+    /* Better touch targets */
+    .btn, .action-btn, .nav-link {
+        min-height: 44px;
+        min-width: 44px;
+        touch-action: manipulation;
+    }
+    
+    /* Improved button feedback */
+    .btn:active, .action-btn:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+    
+    /* Better camera interface for mobile */
+    .camera-container {
+        position: relative;
+        overflow: hidden;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+    
+    .camera-container video {
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+    }
+    
+    /* Optimize animations for mobile */
+    .stat-card:hover {
+        transform: translateY(-4px) scale(1.01);
+    }
+    
+    /* Reduce motion for better performance */
+    .floating-elements {
+        animation-duration: 8s;
+    }
+    
+    .liquid-chrome {
+        animation-duration: 3s;
+    }
+}
+
+/* Android-specific optimizations */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+    /* High DPI displays */
+    .face-frame {
+        border-width: 2px;
+    }
+    
+    .stat-card {
+        border-width: 0.5px;
+    }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+    .nav-container {
+        height: 50px;
+    }
+    
+    .nav-menu {
+        top: 50px;
+        height: calc(100vh - 50px);
+    }
+    
+    .main-content {
+        margin-top: 50px;
+        padding: var(--spacing-sm);
+    }
+    
+    .dashboard-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .camera-container {
+        height: 200px;
+    }
+    
+    .face-frame {
+        width: 100px;
+        height: 100px;
     }
 }
 
