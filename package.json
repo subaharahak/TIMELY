@@ -1,0 +1,48 @@
+{
+  "name": "timely-smart-attendance",
+  "version": "1.0.0",
+  "description": "Smart Face-Based Attendance System with AI-powered recognition",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "build": "echo 'Build complete - static files ready'",
+    "test": "echo 'Tests would run here'",
+    "lint": "echo 'Linting would run here'"
+  },
+  "keywords": [
+    "attendance",
+    "face-recognition",
+    "ai",
+    "computer-vision",
+    "hackathon",
+    "chrome-ui",
+    "neon-effects"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.15.0",
+    "@tensorflow/tfjs-backend-webgl": "^4.15.0",
+    "@tensorflow/tfjs-backend-cpu": "^4.15.0",
+    "face-api.js": "^0.22.2",
+    "mediapipe": "^0.10.8",
+    "camera-js": "^1.0.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/timely-smart-attendance.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/timely-smart-attendance/issues"
+  },
+  "homepage": "https://github.com/yourusername/timely-smart-attendance#readme"
+}

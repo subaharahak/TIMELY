@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timely - Smart Attendance System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils"></script>
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+</head>
+<body class="page-load">
+    <!-- Floating Particles -->
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Additional Floating Elements for Dynamic Background -->
+    <div class="floating-elements">
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+        <div class="floating-square"></div>
+        <div class="floating-square"></div>
+    </div>
+    
+    <!-- Custom Cursor -->
+    <div class="custom-cursor" id="customCursor"></div>
+    
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" id="scrollIndicator">
+        <div class="scroll-dot" data-section="dashboard"></div>
+        <div class="scroll-dot" data-section="register"></div>
+        <div class="scroll-dot" data-section="attendance"></div>
+        <div class="scroll-dot" data-section="students"></div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-clock"></i>
+                <span>Timely</span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#dashboard" class="nav-link active">Dashboard</a>
+                <a href="#register" class="nav-link">Register Face</a>
+                <a href="#attendance" class="nav-link">Attendance</a>
+                <a href="#students" class="nav-link">Students</a>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section active">
+                    <div class="dashboard-header">
+            <h1 class="liquid-chrome">Welcome to Timely</h1>
+            <p>Advanced Face-Based Attendance System</p>
+        </div>
+            
+            <div class="dashboard-stats stagger-animation">
+                <div class="stat-card reveal magnetic-card">
+                    <i class="fas fa-users"></i>
+                    <h3 id="totalStudents">0</h3>
+                    <p>Total Students</p>
+                </div>
+                <div class="stat-card reveal magnetic-card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3 id="presentToday">0</h3>
+                    <p>Present Today</p>
+                </div>
+                <div class="stat-card reveal magnetic-card">
+                    <i class="fas fa-clock"></i>
+                    <h3 id="attendanceRate">0%</h3>
+                    <p>Attendance Rate</p>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <button class="action-btn primary" onclick="showSection('register')">
+                    <i class="fas fa-user-plus"></i>
+                    Register New Student
+                </button>
+                <button class="action-btn secondary" onclick="showSection('attendance')">
+                    <i class="fas fa-camera"></i>
+                    Start Attendance
+                </button>
+            </div>
+        </section>
+
+        <!-- Face Registration Section -->
+        <section id="register" class="section">
+            <div class="section-header">
+                <h2 class="chrome-text">Register New Student</h2>
+                <p>Capture student's face and enter their information</p>
+            </div>
+
+            <div class="registration-container">
+                <div class="camera-section reveal scroll-fade-left">
+                    <div class="camera-container">
+                        <video id="registerVideo" autoplay muted></video>
+                        <canvas id="registerCanvas"></canvas>
+                        <div class="face-overlay" id="faceOverlay">
+                            <div class="face-frame"></div>
+                            <p>Position face within the frame</p>
+                        </div>
+                    </div>
+                    <div class="camera-controls">
+                        <button id="startCamera" class="btn primary">
+                            <i class="fas fa-camera"></i>
+                            Start Camera
+                        </button>
+                        <button id="captureFace" class="btn secondary" disabled>
+                            <i class="fas fa-camera-retro"></i>
+                            Capture Face
+                        </button>
+                        <button id="retakeFace" class="btn danger" style="display: none;">
+                            <i class="fas fa-redo"></i>
+                            Retake
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-section reveal scroll-fade-right">
+                    <form id="studentForm" class="student-form">
+                        <div class="form-group">
+                            <label for="studentName">Full Name</label>
+                            <input type="text" id="studentName" required placeholder="Enter student's full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="studentId">Student ID</label>
+                            <input type="text" id="studentId" required placeholder="Enter student ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="studentClass">Class</label>
+                            <input type="text" id="studentClass" required placeholder="Enter class">
+                        </div>
+                        <div class="form-group">
+                            <label for="studentEmail">Email</label>
+                            <input type="email" id="studentEmail" placeholder="Enter email (optional)">
+                        </div>
+                        <div class="form-group">
+                            <label for="studentGoals">Career Goals</label>
+                            <textarea id="studentGoals" placeholder="Enter student's career goals and interests"></textarea>
+                        </div>
+                        <button type="submit" class="btn primary" id="registerStudent" disabled>
+                            <i class="fas fa-save"></i>
+                            Register Student
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Attendance Section -->
+        <section id="attendance" class="section">
+            <div class="section-header">
+                <h2 class="neon-text">Live Attendance</h2>
+                <p>Real-time face recognition for attendance tracking</p>
+            </div>
+
+            <div class="attendance-container">
+                <div class="camera-section reveal scroll-fade-left">
+                    <div class="camera-container">
+                        <video id="attendanceVideo" autoplay muted></video>
+                        <canvas id="attendanceCanvas"></canvas>
+                        <div class="recognition-status" id="recognitionStatus">
+                            <i class="fas fa-search"></i>
+                            <span>Searching for faces...</span>
+                        </div>
+                    </div>
+                    <div class="camera-controls">
+                        <button id="startAttendanceCamera" class="btn primary">
+                            <i class="fas fa-camera"></i>
+                            Start Recognition
+                        </button>
+                        <button id="stopAttendanceCamera" class="btn danger" disabled>
+                            <i class="fas fa-stop"></i>
+                            Stop Recognition
+                        </button>
+                    </div>
+                </div>
+
+                <div class="attendance-list reveal scroll-fade-right">
+                    <h3>Today's Attendance</h3>
+                    <div class="attendance-grid" id="attendanceGrid">
+                        <!-- Attendance items will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Students Section -->
+        <section id="students" class="section">
+            <div class="section-header">
+                <h2 class="chrome-text">Student Management</h2>
+                <p>View and manage registered students</p>
+            </div>
+
+            <div class="students-container reveal scroll-bounce">
+                <div class="search-bar">
+                    <input type="text" id="searchStudents" placeholder="Search students by name or ID...">
+                    <i class="fas fa-search"></i>
+                </div>
+                
+                <div class="students-grid" id="studentsGrid">
+                    <!-- Student cards will be populated here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h3>Success!</h3>
+            </div>
+            <div class="modal-body">
+                <p id="successMessage">Student registered successfully!</p>
+            </div>
+            <button class="btn primary" onclick="closeModal()">Continue</button>
+        </div>
+    </div>
+
+    <!-- Recognition Modal -->
+    <div id="recognitionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img id="recognizedFace" src="" alt="Recognized Face">
+                <h3 id="recognizedName">Student Name</h3>
+            </div>
+            <div class="modal-body">
+                <div class="student-info">
+                    <p><strong>ID:</strong> <span id="recognizedId">-</span></p>
+                    <p><strong>Class:</strong> <span id="recognizedClass">-</span></p>
+                    <p><strong>Time:</strong> <span id="recognizedTime">-</span></p>
+                </div>
+            </div>
+            <button class="btn primary" onclick="closeRecognitionModal()">Mark Present</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
