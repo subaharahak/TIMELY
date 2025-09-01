@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: timely-smart-attendance
+    env: python
+    plan: free
+    buildCommand: echo "No build required for static site"
+    startCommand: python -m http.server $PORT
+    envVars:
+      - key: PORT
+        value: 10000
+    healthCheckPath: /
+    autoDeploy: true
+    branch: main
+    rootDir: .
+    staticPublishPath: .

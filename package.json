@@ -8,7 +8,8 @@
     "dev": "python -m http.server 8000",
     "build": "echo 'Build complete - static files ready'",
     "test": "echo 'Tests would run here'",
-    "lint": "echo 'Linting would run here'"
+    "lint": "echo 'Linting would run here'",
+    "render-start": "python -m http.server $PORT"
   },
   "keywords": [
     "attendance",

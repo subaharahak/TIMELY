@@ -1,0 +1,2 @@
+# No additional Python packages required for static site hosting
+# The built-in http.server module is sufficient
