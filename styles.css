@@ -468,6 +468,32 @@ h4 {
     box-shadow: var(--shadow-glow);
 }
 
+/* Logout Button */
+.logout-btn {
+    background: var(--neon-pink) !important;
+    color: var(--text-primary) !important;
+    border: none !important;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    box-shadow: 0 0 20px rgba(236, 73, 153, 0.3);
+}
+
+.logout-btn:hover {
+    background: var(--neon-pink) !important;
+    box-shadow: 0 0 30px rgba(236, 73, 153, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
+.logout-btn::before {
+    display: none !important;
+}
+
+.logout-btn::after {
+    display: none !important;
+}
+
 /* Hamburger Menu for Mobile */
 .hamburger {
     display: none;

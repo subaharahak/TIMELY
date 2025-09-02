@@ -150,11 +150,11 @@ class TimelySystem {
         try {
             console.log('Loading face-api.js models...');
             
-            // Load all required models
+            // Load all required models with correct path
             await Promise.all([
-                faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-                faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-                faceapi.nets.faceRecognitionNet.loadFromUri('/models')
+                faceapi.nets.tinyFaceDetector.loadFromUri('./models'),
+                faceapi.nets.faceLandmark68Net.loadFromUri('./models'),
+                faceapi.nets.faceRecognitionNet.loadFromUri('./models')
             ]);
             
             console.log('✅ Face API models loaded successfully');
@@ -1020,9 +1020,41 @@ function closeRecognitionModal() {
     }
 }
 
+// Authentication check
+function checkAuthentication() {
+    const user = localStorage.getItem('timely_user');
+    if (!user) {
+        // Redirect to login page if not authenticated
+        window.location.href = 'login.html';
+        return false;
+    }
+    
+    try {
+        const userData = JSON.parse(user);
+        console.log('User authenticated:', userData.email);
+        return true;
+    } catch (error) {
+        console.error('Invalid user data:', error);
+        localStorage.removeItem('timely_user');
+        window.location.href = 'login.html';
+        return false;
+    }
+}
+
+// Logout function
+function logout() {
+    localStorage.removeItem('timely_user');
+    window.location.href = 'login.html';
+}
+
 // Initialize the system when page loads
 let timelySystem;
 document.addEventListener('DOMContentLoaded', () => {
+    // Check authentication first
+    if (!checkAuthentication()) {
+        return;
+    }
+    
     console.log('Initializing Timely System...');
     timelySystem = new TimelySystem();
     console.log('Timely System initialized successfully');

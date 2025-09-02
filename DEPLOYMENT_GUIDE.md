@@ -195,3 +195,4 @@ Once deployed, your Timely Smart Attendance System will be:
 - ✅ **Professional Chrome/Neon UI**
 
 **Your hackathon project is now live and ready to impress! 🚀✨**
+

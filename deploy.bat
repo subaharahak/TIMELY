@@ -39,3 +39,4 @@ echo 🌐 Your app will be available at: https://timely-smart-attendance.onrende
 echo.
 echo 📚 For detailed instructions, see DEPLOYMENT_GUIDE.md
 pause
+

@@ -76,3 +76,4 @@ Your Timely Smart Attendance System will be:
 - ✅ **Professional UI**
 
 **Ready to impress at your hackathon! 🏆**
+
