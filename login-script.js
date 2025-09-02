@@ -19,6 +19,7 @@ class TimelyLogin {
         this.startBackgroundAnimations();
         this.setupFormValidation();
         this.initializeAnimations();
+        this.initCustomCursor();
     }
 
     setupEventListeners() {
@@ -282,8 +283,12 @@ class TimelyLogin {
         if (modal) {
             modal.classList.add('show');
             
-            // Add confetti effect
+            // Add multiple creative effects
             this.createConfetti();
+            this.createSuccessParticles();
+            this.createSuccessWaves();
+            this.createSuccessRings();
+            this.animateSuccessElements();
         }
     }
 
@@ -456,12 +461,63 @@ class TimelyLogin {
 
     createConfetti() {
         const colors = ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe', '#00f2fe'];
-        const confettiCount = 50;
+        const confettiCount = 100;
         
         for (let i = 0; i < confettiCount; i++) {
             setTimeout(() => {
                 this.createConfettiPiece(colors[Math.floor(Math.random() * colors.length)]);
-            }, i * 20);
+            }, i * 10);
+        }
+    }
+
+    createSuccessParticles() {
+        const particleCount = 30;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        
+        for (let i = 0; i < particleCount; i++) {
+            setTimeout(() => {
+                this.createSuccessParticle(centerX, centerY);
+            }, i * 50);
+        }
+    }
+
+    createSuccessWaves() {
+        const waveCount = 5;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        
+        for (let i = 0; i < waveCount; i++) {
+            setTimeout(() => {
+                this.createSuccessWave(centerX, centerY, i * 100);
+            }, i * 200);
+        }
+    }
+
+    createSuccessRings() {
+        const ringCount = 3;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        
+        for (let i = 0; i < ringCount; i++) {
+            setTimeout(() => {
+                this.createSuccessRing(centerX, centerY, i * 150);
+            }, i * 300);
+        }
+    }
+
+    animateSuccessElements() {
+        // Animate the success modal elements
+        const modal = document.getElementById('successModal');
+        const successIcon = modal.querySelector('.success-icon');
+        const modalContent = modal.querySelector('.modal-content');
+        
+        if (successIcon) {
+            successIcon.style.animation = 'successBounce 0.8s ease-out, successGlow 2s ease-in-out infinite';
+        }
+        
+        if (modalContent) {
+            modalContent.style.animation = 'modalSlideIn 0.6s ease-out, modalFloat 3s ease-in-out infinite';
         }
     }
 
@@ -499,6 +555,180 @@ class TimelyLogin {
         animation.onfinish = () => {
             confetti.remove();
         };
+    }
+
+    createSuccessParticle(centerX, centerY) {
+        const particle = document.createElement('div');
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 100 + Math.random() * 200;
+        const endX = centerX + Math.cos(angle) * distance;
+        const endY = centerY + Math.sin(angle) * distance;
+        
+        particle.style.cssText = `
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            left: ${centerX}px;
+            top: ${centerY}px;
+            z-index: 3000;
+            pointer-events: none;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.8);
+        `;
+        
+        document.body.appendChild(particle);
+        
+        const animation = particle.animate([
+            { 
+                transform: 'translate(0, 0) scale(1)',
+                opacity: 1
+            },
+            { 
+                transform: `translate(${endX - centerX}px, ${endY - centerY}px) scale(0)`,
+                opacity: 0
+            }
+        ], {
+            duration: 2000,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        });
+        
+        animation.onfinish = () => {
+            particle.remove();
+        };
+    }
+
+    createSuccessWave(centerX, centerY, delay) {
+        const wave = document.createElement('div');
+        wave.style.cssText = `
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(102, 126, 234, 0.8);
+            border-radius: 50%;
+            left: ${centerX - 10}px;
+            top: ${centerY - 10}px;
+            z-index: 3000;
+            pointer-events: none;
+        `;
+        
+        document.body.appendChild(wave);
+        
+        const animation = wave.animate([
+            { 
+                transform: 'scale(1)',
+                opacity: 1
+            },
+            { 
+                transform: 'scale(20)',
+                opacity: 0
+            }
+        ], {
+            duration: 1500,
+            delay: delay,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        });
+        
+        animation.onfinish = () => {
+            wave.remove();
+        };
+    }
+
+    createSuccessRing(centerX, centerY, delay) {
+        const ring = document.createElement('div');
+        ring.style.cssText = `
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            border: 3px solid rgba(236, 72, 153, 0.6);
+            border-radius: 50%;
+            left: ${centerX - 50}px;
+            top: ${centerY - 50}px;
+            z-index: 3000;
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.4);
+        `;
+        
+        document.body.appendChild(ring);
+        
+        const animation = ring.animate([
+            { 
+                transform: 'scale(0.5) rotate(0deg)',
+                opacity: 1
+            },
+            { 
+                transform: 'scale(3) rotate(360deg)',
+                opacity: 0
+            }
+        ], {
+            duration: 2000,
+            delay: delay,
+            easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        });
+        
+        animation.onfinish = () => {
+            ring.remove();
+        };
+    }
+
+    // Initialize custom cursor
+    initCustomCursor() {
+        const cursor = document.getElementById('customCursor');
+        if (!cursor) return;
+
+        // Hide default cursor
+        document.body.style.cursor = 'none';
+
+        // Mouse move event
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursor.style.display = 'block';
+        });
+
+        // Mouse leave event
+        document.addEventListener('mouseleave', () => {
+            cursor.style.display = 'none';
+        });
+
+        // Mouse enter event
+        document.addEventListener('mouseenter', () => {
+            cursor.style.display = 'block';
+        });
+
+        // Click effect
+        document.addEventListener('mousedown', () => {
+            cursor.classList.add('click');
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.classList.remove('click');
+        });
+
+        // Add hover effect to interactive elements
+        const interactiveElements = document.querySelectorAll(
+            'button, a, .login-btn, .social-btn, .form-group input, .form-group textarea, .forgot-password, .signup-link, .remember-me, .password-toggle'
+        );
+        
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
+
+        // Text cursor effect
+        const textElements = document.querySelectorAll('input, textarea, [contenteditable]');
+        textElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('text');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('text');
+            });
+        });
     }
 
     // Utility methods

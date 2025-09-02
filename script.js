@@ -18,6 +18,8 @@ class TimelySystem {
     init() {
         this.setupEventListeners();
         this.updateDashboard();
+        this.updateUserInfo();
+        this.updateDailyStats();
         this.renderStudentsGrid();
         this.renderAttendanceGrid();
         this.initScrollReveal();
@@ -75,19 +77,57 @@ class TimelySystem {
         const cursor = document.getElementById('customCursor');
         if (!cursor) return;
 
+        // Hide default cursor
+        document.body.style.cursor = 'none';
+
+        // Mouse move event
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
+            cursor.style.display = 'block';
+        });
+
+        // Mouse leave event
+        document.addEventListener('mouseleave', () => {
+            cursor.style.display = 'none';
+        });
+
+        // Mouse enter event
+        document.addEventListener('mouseenter', () => {
+            cursor.style.display = 'block';
+        });
+
+        // Click effect
+        document.addEventListener('mousedown', () => {
+            cursor.classList.add('click');
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.classList.remove('click');
         });
 
         // Add hover effect to interactive elements
-        const interactiveElements = document.querySelectorAll('button, a, .stat-card, .student-card, .action-btn');
+        const interactiveElements = document.querySelectorAll(
+            'button, a, .stat-card, .student-card, .action-btn, .daily-stat-card, .welcome-header, .avatar-container, .nav-link, .btn, .social-btn, .login-btn, .form-group input, .form-group textarea'
+        );
+        
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursor.classList.add('hover');
             });
             el.addEventListener('mouseleave', () => {
                 cursor.classList.remove('hover');
+            });
+        });
+
+        // Text cursor effect
+        const textElements = document.querySelectorAll('input, textarea, [contenteditable]');
+        textElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('text');
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('text');
             });
         });
     }
@@ -778,6 +818,97 @@ class TimelySystem {
 
         // Show success notification
         this.showNotification(`Attendance marked for ${student.name}`, 'success');
+    }
+
+    // Update user information display
+    updateUserInfo() {
+        const userData = this.getUserData();
+        if (!userData) return;
+
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const userInfo = document.getElementById('userInfo');
+        const loginTime = document.getElementById('loginTime');
+
+        if (welcomeMessage) {
+            const name = this.getDisplayName(userData.email);
+            welcomeMessage.textContent = `Welcome back, ${name}!`;
+        }
+
+        if (userInfo) {
+            userInfo.textContent = `${userData.email} • ${userData.role}`;
+        }
+
+        if (loginTime) {
+            const loginDate = new Date(userData.loginTime);
+            const timeString = loginDate.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            });
+            const dateString = loginDate.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            loginTime.textContent = `Logged in at ${timeString} on ${dateString}`;
+        }
+    }
+
+    // Update daily statistics
+    updateDailyStats() {
+        const today = new Date().toDateString();
+        const totalStudents = this.students.length;
+        const presentToday = this.attendance[today] ? this.attendance[today].length : 0;
+        const attendanceRate = totalStudents > 0 ? Math.round((presentToday / totalStudents) * 100) : 0;
+        const timeSaved = presentToday * 2; // 2 minutes saved per student
+
+        // Update daily stats with animations
+        this.animateNumber(document.getElementById('totalStudentsToday'), 0, totalStudents, 2000);
+        this.animateNumber(document.getElementById('presentToday'), 0, presentToday, 2000, 500);
+        this.animateNumber(document.getElementById('attendanceRate'), 0, attendanceRate, 2000, 1000, '%');
+        this.animateNumber(document.getElementById('timeSaved'), 0, timeSaved, 2000, 1500);
+
+        // Update trend indicators (mock data for demo)
+        this.updateTrends();
+    }
+
+    // Update trend indicators
+    updateTrends() {
+        const trends = {
+            studentsTrend: '+12%',
+            attendanceTrend: '+8%',
+            rateTrend: '+5%',
+            timeTrend: '+15%'
+        };
+
+        Object.entries(trends).forEach(([id, value]) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.textContent = value;
+            }
+        });
+    }
+
+    // Get user data from localStorage
+    getUserData() {
+        try {
+            const userData = localStorage.getItem('timely_user');
+            return userData ? JSON.parse(userData) : null;
+        } catch (error) {
+            console.error('Error loading user data:', error);
+            return null;
+        }
+    }
+
+    // Get display name from email
+    getDisplayName(email) {
+        const nameMap = {
+            'teacher@timely.com': 'Teacher',
+            'admin@timely.com': 'Administrator',
+            'demo@timely.com': 'Demo User'
+        };
+        return nameMap[email] || email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1);
     }
 
     // UI Updates

@@ -81,11 +81,86 @@
     <main class="main-content">
         <!-- Dashboard Section -->
         <section id="dashboard" class="section active">
-                    <div class="dashboard-header">
-            <h1 class="liquid-chrome">Welcome to Timely</h1>
-            <p>Advanced Face-Based Attendance System</p>
-        </div>
+            <!-- Welcome Header with User Info -->
+            <div class="welcome-header">
+                <div class="welcome-content">
+                    <div class="user-greeting">
+                        <h1 class="liquid-chrome" id="welcomeMessage">Welcome back!</h1>
+                        <p class="user-info" id="userInfo">Loading user information...</p>
+                        <div class="login-time" id="loginTime"></div>
+                    </div>
+                    <div class="user-avatar">
+                        <div class="avatar-container">
+                            <i class="fas fa-user-circle"></i>
+                            <div class="avatar-status online"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Stats Overview -->
+            <div class="daily-overview">
+                <h2 class="section-title">
+                    <i class="fas fa-calendar-day"></i>
+                    Today's Overview
+                </h2>
+                <div class="daily-stats-grid">
+                    <div class="daily-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalStudentsToday">0</h3>
+                            <p>Students Logged In</p>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span id="studentsTrend">+12%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="daily-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="presentToday">0</h3>
+                            <p>Present Today</p>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span id="attendanceTrend">+8%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="daily-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="attendanceRate">0%</h3>
+                            <p>Attendance Rate</p>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span id="rateTrend">+5%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="daily-stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="timeSaved">0</h3>
+                            <p>Minutes Saved</p>
+                            <div class="stat-trend positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span id="timeTrend">+15%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
+            <!-- Main Dashboard Stats -->
             <div class="dashboard-stats stagger-animation">
                 <div class="stat-card reveal magnetic-card">
                     <i class="fas fa-users"></i>
